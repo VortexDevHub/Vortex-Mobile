@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <!-- Remote definitions -->
+  <remote name="aosp"
+          fetch="https://android.googlesource.com"
+          review="https://android-review.googlesource.com/" />
+  
+  <remote name="vortex"
+          fetch="https://github.com/vortex-os"
+          review="https://github.com/vortex-os" />
+  
+  <!-- Default revision -->
+  <default revision="refs/tags/android-13.0.0_r41"
+          remote="aosp"
+          sync-j="4" />
+  
+  <!-- AOSP core projects -->
+  <project path="build/make" name="platform/build" groups="pdk">
+    <copyfile src="core/root.mk" dest="Makefile" />
+    <linkfile src="CleanSpec.mk" dest="build/CleanSpec.mk" />
+    <linkfile src="buildspec.mk.default" dest="build/buildspec.mk.default" />
+    <linkfile src="core" dest="build/core" />
+    <linkfile src="envsetup.sh" dest="build/envsetup.sh" />
+    <linkfile src="target" dest="build/target" />
+    <linkfile src="tools" dest="build/tools" />
+  </project>
+  
+  <project path="build/soong" name="platform/build/soong" groups="pdk,tradefed">
+    <linkfile src="root.bp" dest="Android.bp" />
+    <linkfile src="bootstrap.bash" dest="bootstrap.bash" />
+  </project>
+  
+  <!-- Vortex OS custom projects -->
+  <project path="build/vortex" name="vortex-build" remote="vortex" revision="main" />
+  <project path="frameworks/vortex" name="vortex-framework" remote="vortex" revision="main" />
+  <project path="system/vortex" name="vortex-system" remote="vortex" revision="main" />
+  <project path="core/vortex" name="vortex-core" remote="vortex" revision="main" />
+  <project path="packages/apps/VortexSystemUI" name="vortex-systemui" remote="vortex" revision="main" />
+  <project path="packages/apps/VortexLauncher" name="vortex-launcher" remote="vortex" revision="main" />
+  <project path="packages/apps/VortexSettings" name="vortex-settings" remote="vortex" revision="main" />
+  <project path="hardware/vortex" name="vortex-hardware" remote="vortex" revision="main" />
+  <project path="external/rust" name="vortex-rust" remote="vortex" revision="main" />
+  
+  <!-- AOSP frameworks -->
+  <project path="frameworks/base" name="platform/frameworks/base" groups="pdk-cw-fs,pdk-fs" />
+  <project path="frameworks/native" name="platform/frameworks/native" groups="pdk" />
+  <project path="frameworks/av" name="platform/frameworks/av" groups="pdk" />
+  
+  <!-- System components -->
+  <project path="system/core" name="platform/system/core" groups="pdk" />
+  <project path="system/sepolicy" name="platform/system/sepolicy" groups="pdk" />
+  <project path="system/vold" name="platform/system/vold" groups="pdk" />
+  <project path="system/security" name="platform/system/security" groups="pdk" />
+  
+  <!-- Hardware support -->
+  <project path="hardware/interfaces" name="platform/hardware/interfaces" groups="pdk" />
+  <project path="hardware/libhardware" name="platform/hardware/libhardware" groups="pdk" />
+  
+  <!-- External dependencies -->
+  <project path="external/rust/crates" name="platform/external/rust/crates" groups="pdk" />
+  <project path="external/clang" name="platform/external/clang" groups="pdk" />
+  <project path="external/llvm" name="platform/external/llvm" groups="pdk" />
+  
+  <!-- Device support -->
+  <project path="device/vortex/common" name="vortex-device-common" remote="vortex" revision="main" />
+  <project path="device/google/pixel" name="vortex-device-google-pixel" remote="vortex" revision="main" />
+  <project path="device/samsung/galaxy" name="vortex-device-samsung-galaxy" remote="vortex" revision="main" />
+  <project path="device/oneplus/flagship" name="vortex-device-oneplus-flagship" remote="vortex" revision="main" />
+  
+  <!-- Prebuilts -->
+  <project path="prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9" name="platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9" groups="pdk,linux,arm" clone-depth="1" />
+  <project path="prebuilts/rust" name="platform/prebuilts/rust" groups="pdk" clone-depth="1" />
+  <project path="prebuilts/clang/host/linux-x86" name="platform/prebuilts/clang/host/linux-x86" groups="pdk" clone-depth="1" />
+</manifest> 
